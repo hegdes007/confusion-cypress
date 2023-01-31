@@ -1,4 +1,4 @@
-// /   <reference types="cypress" />
+///   <reference types="cypress" />
 
 import { And, Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
@@ -12,4 +12,12 @@ Then("I should see Navigation Bar and links associated with it", () => {
 
 And("I should see Home link should be active", () => {
   cy.get("#Navbar ul li").eq(0).should("have.class", "active");
+});
+
+Then("I should see the moving Carousel Items", () => {
+  cy.get("#mycarousel").should("be.visible");
+});
+
+And("There should be {string} Carousel Items", (length, val: string) => {
+  cy.get(".carousel-item").should("have.length", length);
 });
