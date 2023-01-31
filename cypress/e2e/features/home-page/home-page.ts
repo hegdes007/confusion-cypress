@@ -2,6 +2,7 @@
 
 import { And, Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
+
 When("I visit the Home Page", () => {
   cy.visit("/index.html");
 });
@@ -33,3 +34,20 @@ And("Executive Chef name should be {string}", (name, val: string) => {
       cy.get(".media-body h2").should("have.text", name);
     });
 });
+
+Then ("I should see the Weekned Grand Buffet NEW on Home Page",()=>{
+  cy.get(".media-body h2").should("be.visible");
+});
+
+
+ And ("Background Color for NEW should be {string}",(color,val:string)=>{
+  cy.get(".row")
+    .eq(7)
+    .within(() =>{
+  cy.get(".badge-danger").should( "have.css",'background-color',color)
+    });
+ 
+
+ });
+
+     
