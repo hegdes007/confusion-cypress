@@ -14,3 +14,8 @@ Scenario: Verify the display of Executive Chef Row on Home Page
     When I visit the Home Page
     Then I should see the Executive Chef Row on Home Page
     And Executive Chef name should be 'Alberto Somayya'
+
+Scenario: Verify the display of links in Home Page
+    When I visit the Home Page
+    Then I should see the list of the links
+    And I should see the name 'Links'

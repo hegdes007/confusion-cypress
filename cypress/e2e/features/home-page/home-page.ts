@@ -33,3 +33,13 @@ And("Executive Chef name should be {string}", (name, val: string) => {
       cy.get(".media-body h2").should("have.text", name);
     });
 });
+
+Then("I should see the list of the links", () => {
+  cy.get(".list-unstyled").should("be.visible");
+});
+
+And("I should see the name {string}", (name, val: string) => {
+  cy.get(".row").eq(9).within(() => {
+    cy.get(".col-4.offset-1.col-sm-2 h5").should("have.text", name);
+  });
+});
