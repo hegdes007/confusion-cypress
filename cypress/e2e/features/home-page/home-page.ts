@@ -21,3 +21,15 @@ Then("I should see the moving Carousel Items", () => {
 And("There should be {string} Carousel Items", (length, val: string) => {
   cy.get(".carousel-item").should("have.length", length);
 });
+
+Then("I should see the Executive Chef Row on Home Page", () => {
+  cy.get(".row").eq(8).should("be.visible");
+});
+
+And("Executive Chef name should be {string}", (name, val: string) => {
+  cy.get(".row")
+    .eq(8)
+    .within(() => {
+      cy.get(".media-body h2").should("have.text", name);
+    });
+});
