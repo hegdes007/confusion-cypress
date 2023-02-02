@@ -1,7 +1,6 @@
 ///   <reference types="cypress" />
 
 import { And, Then, When } from "@badeball/cypress-cucumber-preprocessor";
-import { should } from "chai";
 
 When("I visit the Home Page", () => {
   cy.visit("/index.html");
@@ -86,4 +85,32 @@ Then("I type Username and Password", (dataTable: any) => {
 And("Clicking on Sign In closes the Modal", () => {
   cy.get(".btn-primary").eq(0).click();
   cy.get(".modal-dialog").should("not.be.visible");
+});
+
+Then("I should see the Reserve Table Button in Home Page", () => {
+  cy.get("#reserveButton").should("be.visible");
+});
+
+When("I click on Reserve Table Button I should see Reserve Table Modal Open", () => {
+  cy.get("#reserveButton").click();
+  cy.get(".modal-dialog").should("be.visible");
+});
+
+Then("I should click to choose the Number Of Guests", () => {
+  cy.get(".row")
+  .eq(1)
+  .within(() => {
+    cy.get(".form-group").should("be.visible");
+    cy.get("#1").click();
+});
+});
+
+And("I should type the Date and Time", (dataTable: any) => {
+  cy.get("#date.form-control").type(dataTable.rawTable[1][0]);
+  cy.get("#time.form-control").type(dataTable.rawTable[1][1]);
+});
+
+And("Clicking on Reserve closes the Reserve Table Modal", () => {
+    cy.get(".btn-primary").eq(1).click();
+    cy.get(".modal-dialog").should("not.be.visible");
 });
