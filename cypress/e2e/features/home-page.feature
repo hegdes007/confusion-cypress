@@ -14,3 +14,15 @@ Scenario: Verify the display of Executive Chef Row on Home Page
     When I visit the Home Page
     Then I should see the Executive Chef Row on Home Page
     And Executive Chef name should be 'Alberto Somayya'
+
+Scenario: Verify the display of navigation links at bottom of Home Page
+    When I visit the Home Page
+    Then I should see the list of the navigation links in the bottom of home page
+    And Its heading should be 'Links'
+    And I should see '4' links in the list
+
+Scenario: Verify the display of dish in Home Page
+    When I visit the Home Page
+    Then I should see the dish in home page
+    And I should see a 'HOT' label in Red color
+    And I should see a '$4.99' price tag in Grey color
