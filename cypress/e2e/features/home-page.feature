@@ -26,3 +26,12 @@ Scenario: Verify the display of dish in Home Page
     Then I should see the dish in home page
     And I should see a 'HOT' label in Red color
     And I should see a '$4.99' price tag in Grey color
+
+Scenario: Verify the display of Login Modal in Home Page
+    When I visit the Home Page
+    Then I should see the Login Button in Home Page
+    When I click on Login Button I should see Login Modal Open
+    Then I type Username and Password
+    |Username     |Password |
+    |admin@xyz.com|admin@123|
+    And Clicking on Sign In closes the Modal

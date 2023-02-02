@@ -1,6 +1,7 @@
 ///   <reference types="cypress" />
 
 import { And, Then, When } from "@badeball/cypress-cucumber-preprocessor";
+import { should } from "chai";
 
 When("I visit the Home Page", () => {
   cy.visit("/index.html");
@@ -18,7 +19,7 @@ Then("I should see the moving Carousel Items", () => {
   cy.get("#mycarousel").should("be.visible");
 });
 
-And("There should be {string} Carousel Items", (length, val: string) => {
+And("There should be {string} Carousel Items", (length: string) => {
   cy.get(".carousel-item").should("have.length", length);
 });
 
@@ -26,7 +27,7 @@ Then("I should see the Executive Chef Row on Home Page", () => {
   cy.get(".row").eq(8).should("be.visible");
 });
 
-And("Executive Chef name should be {string}", (name, val: string) => {
+And("Executive Chef name should be {string}", (name: string) => {
   cy.get(".row")
     .eq(8)
     .within(() => {
@@ -41,11 +42,11 @@ Then(
   }
 );
 
-And("Its heading should be {string}", (name, val: string) => {
-  cy.get(".offset-1 h5").should("have.text", name);
+And("Its heading should be {string}", (links: string) => {
+  cy.get(".offset-1 h5").should("have.text", links);
 });
 
-And("I should see {string} links in the list", (number, val: string) => {
+And("I should see {string} links in the list", (number: string) => {
   cy.get(".list-unstyled").children().should("have.length", number);
 });
 
@@ -53,7 +54,7 @@ Then("I should see the dish in home page", () => {
   cy.get(".row").eq(6).should("be.visible");
 });
 
-And("I should see a {string} label in Red color", (label, val: string) => {
+And("I should see a {string} label in Red color", (label: string) => {
   cy.get(".row .badge-danger")
     .eq(2)
     .should("be.visible")
@@ -61,9 +62,28 @@ And("I should see a {string} label in Red color", (label, val: string) => {
     .should("have.css", "background-color", "rgb(220, 53, 69)");
 });
 
-And("I should see a {string} price tag in Grey color", (price, val: string) => {
+And("I should see a {string} price tag in Grey color", (price: string) => {
   cy.get(".row .badge-secondary")
     .should("be.visible")
     .should("have.text", price)
     .should("have.css", "background-color", "rgb(108, 117, 125)");
+});
+
+Then("I should see the Login Button in Home Page", () => {
+  cy.get("#loginButton").should("be.visible");
+});
+
+When("I click on Login Button I should see Login Modal Open", () => {
+  cy.get("#loginButton").click();
+  cy.get(".modal-dialog").should("be.visible");
+});
+
+Then("I type Username and Password", (dataTable: any) => {
+  cy.get("#exampleInputEmail3").type(dataTable.rawTable[1][0]);
+  cy.get("#exampleInputPassword3").type(dataTable.rawTable[1][1]);
+});
+
+And("Clicking on Sign In closes the Modal", () => {
+  cy.get(".btn-primary").eq(0).click();
+  cy.get(".modal-dialog").should("not.be.visible");
 });
