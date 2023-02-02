@@ -33,3 +33,37 @@ And("Executive Chef name should be {string}", (name, val: string) => {
       cy.get(".media-body h2").should("have.text", name);
     });
 });
+
+Then(
+  "I should see the list of the navigation links in the bottom of home page",
+  () => {
+    cy.get(".offset-1").should("be.visible");
+  }
+);
+
+And("Its heading should be {string}", (name, val: string) => {
+  cy.get(".offset-1 h5").should("have.text", name);
+});
+
+And("I should see {string} links in the list", (number, val: string) => {
+  cy.get(".list-unstyled").children().should("have.length", number);
+});
+
+Then("I should see the dish in home page", () => {
+  cy.get(".row").eq(6).should("be.visible");
+});
+
+And("I should see a {string} label in Red color", (label, val: string) => {
+  cy.get(".row .badge-danger")
+    .eq(2)
+    .should("be.visible")
+    .should("have.text", label)
+    .should("have.css", "background-color", "rgb(220, 53, 69)");
+});
+
+And("I should see a {string} price tag in Grey color", (price, val: string) => {
+  cy.get(".row .badge-secondary")
+    .should("be.visible")
+    .should("have.text", price)
+    .should("have.css", "background-color", "rgb(108, 117, 125)");
+});
