@@ -3,7 +3,7 @@ Feature: Home Page
 Scenario: Verify the display of navigation bar in Home Page
     When I visit the Home Page
     Then I should see Navigation Bar and links associated with it
-    And I should see Home link should be active
+    And I should see 'Home' link should be active
 
 Scenario: Verify the display of Carousel Items on Home Page
     When I visit the Home Page
@@ -35,7 +35,7 @@ Scenario: Verify the display of Login Modal in Home Page
     |Username     |Password |
     |admin@xyz.com|admin@123|
     And Clicking on Sign In closes the Modal
-    
+
 Scenario: Verify the display of Reserve Table Modal in Home Page
     When I visit the Home Page
     Then I should see the Reserve Table Button in Home Page

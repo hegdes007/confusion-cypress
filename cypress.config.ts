@@ -29,7 +29,7 @@ module.exports = defineConfig({
 
       return config;
     },
-    specPattern: "cypress/e2e/features/*.feature",
+    specPattern: ["cypress/e2e/features/*.feature"],
     baseUrl: "https://hegdes007.github.io/conFusion",
     chromeWebSecurity: false,
     defaultCommandTimeout: 4000,

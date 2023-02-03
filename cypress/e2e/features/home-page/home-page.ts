@@ -2,18 +2,6 @@
 
 import { And, Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
-When("I visit the Home Page", () => {
-  cy.visit("/index.html");
-});
-
-Then("I should see Navigation Bar and links associated with it", () => {
-  cy.get("#Navbar").should("be.visible");
-});
-
-And("I should see Home link should be active", () => {
-  cy.get("#Navbar ul li").eq(0).should("have.class", "active");
-});
-
 Then("I should see the moving Carousel Items", () => {
   cy.get("#mycarousel").should("be.visible");
 });
@@ -91,18 +79,21 @@ Then("I should see the Reserve Table Button in Home Page", () => {
   cy.get("#reserveButton").should("be.visible");
 });
 
-When("I click on Reserve Table Button I should see Reserve Table Modal Open", () => {
-  cy.get("#reserveButton").click();
-  cy.get(".modal-dialog").should("be.visible");
-});
+When(
+  "I click on Reserve Table Button I should see Reserve Table Modal Open",
+  () => {
+    cy.get("#reserveButton").click();
+    cy.get(".modal-dialog").should("be.visible");
+  }
+);
 
 Then("I should click to choose the Number Of Guests", () => {
   cy.get(".row")
-  .eq(1)
-  .within(() => {
-    cy.get(".form-group").should("be.visible");
-    cy.get("#1").click();
-});
+    .eq(1)
+    .within(() => {
+      cy.get(".form-group").should("be.visible");
+      cy.get("#1").click();
+    });
 });
 
 And("I should type the Date and Time", (dataTable: any) => {
@@ -111,6 +102,6 @@ And("I should type the Date and Time", (dataTable: any) => {
 });
 
 And("Clicking on Reserve closes the Reserve Table Modal", () => {
-    cy.get(".btn-primary").eq(1).click();
-    cy.get(".modal-dialog").should("not.be.visible");
+  cy.get(".btn-primary").eq(1).click();
+  cy.get(".modal-dialog").should("not.be.visible");
 });

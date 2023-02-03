@@ -15,6 +15,12 @@
     "cypress": "^10.7.0",
     "esbuild": "^0.15.7"
   },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "cypress/e2e/common/common.{js,ts}",
+      "cypress/e2e/features/**/*.{js,ts}"
+    ]
+  },
   "dependencies": {
     "typescript": "^4.8.3"
   }
