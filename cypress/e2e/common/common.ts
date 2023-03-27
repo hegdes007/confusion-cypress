@@ -5,6 +5,11 @@ When("I visit the Home Page", () => {
   cy.visit("/");
 });
 
+When("I visit the About Page", () => {
+  cy.visit("/aboutus.html");
+  cy.url().should("contain", "aboutus.html");
+});
+
 When("I visit the Menu Page", () => {
   cy.visit("/menu.html");
   cy.url().should("contain", "menu.html");
