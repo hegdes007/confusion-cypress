@@ -45,3 +45,11 @@ Scenario: Verify the display of Reserve Table Modal in Home Page
     |Date      |Time |
     |02/02/2023|17:30|
     And Clicking on Reserve closes the Reserve Table Modal
+
+@focus
+Scenario: Example to demonstrate handling of JavaScript Alerts, Confirm, Prompt in Cypress
+    When I vist the Alert Page
+    Then Handling JS Alert - Validate Alert Text and Click OK
+    Then Handling JS Confirm - Validate Confirm Text and Click OK
+    Then Handling JS Confirm - Click Cancel
+    Then Handling JS Prompt - Input text in prompt, Click OK and Validate Input Text
