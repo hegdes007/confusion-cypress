@@ -1,7 +1,7 @@
 {
   "name": "confusion-cypress",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "npm init -y <br />\r npm install typescript <br />\r npm install cypress --save-dev <br />\r npm install @badeball/cypress-cucumber-preprocessor --save-dev <br />\r npm i -D cypress @bahmutov/cypress-esbuild-preprocessor esbuild",
   "main": "index.js",
   "scripts": {
     "cypress": "cypress open"
@@ -12,8 +12,8 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^12.2.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.1.3",
-    "cypress": "^10.7.0",
-    "esbuild": "^0.15.7"
+    "cypress": "^10.11.0",
+    "esbuild": "^0.14.23"
   },
   "cypress-cucumber-preprocessor": {
     "stepDefinitions": [
