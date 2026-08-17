@@ -47,7 +47,7 @@ Then("I should see the Error Message in Menu Page", () => {
 When("I hit the API I should see API resonse status as 200", () => {
   cy.request({
     method: "GET",
-    url: "https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian",
+    url: "https://www.themealdb.com/api/json/v1/1/filter.php?a=India",
   }).then((response) => {
     expect(response.status).to.eq(200);
   });
@@ -56,7 +56,7 @@ When("I hit the API I should see API resonse status as 200", () => {
 And("Check the length of the meals array", () => {
   cy.request({
     method: "GET",
-    url: "https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian",
+    url: "https://www.themealdb.com/api/json/v1/1/filter.php?a=India",
   }).then((response) => {
     expect(response.body).to.have.property("meals");
     expect(response.body.meals).to.be.an("array");
