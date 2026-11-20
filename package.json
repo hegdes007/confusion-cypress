@@ -8,7 +8,7 @@
     "cy:chrome": "cross-env ALLURE_LABEL_browser=Chrome cypress run --browser chrome",
     "cy:firefox": "cross-env ALLURE_LABEL_browser=Firefox cypress run --browser firefox",
     "cy:webkit": "cross-env ALLURE_LABEL_browser=WebKit cypress run --browser webkit",
-    "cy:run-all": "run-p --continue-on-error cy:chrome cy:firefox cy:webkit",
+    "cy:run-all": "run-s --continue-on-error cy:chrome cy:firefox cy:webkit",
     "allure:clean": "rimraf allure-report",
     "allure-report": "npm run allure:clean && allure generate ./allure-results --output ./allure-report"
   },
