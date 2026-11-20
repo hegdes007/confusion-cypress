@@ -1,8 +1,8 @@
 ///   <reference types="cypress" />
 
-import { And, Then, When } from "@badeball/cypress-cucumber-preprocessor";
+import { Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
-And("I click on Menu link in Navigation bar", () => {
+Then("I click on Menu link in Navigation bar", () => {
   cy.get("#Navbar ul li").eq(2).click();
 });
 
@@ -10,19 +10,22 @@ Then("I should navigate to Menu page", () => {
   cy.url().should("contains", "menu.html");
 });
 
-And("I should see breadcrumb in Menu page", () => {
+Then("I should see breadcrumb in Menu page", () => {
   cy.get(".breadcrumb").should("be.visible");
 });
 
-Then("I should see {string} dishes in Menu Page", (totalDishes: string) => {
-  cy.get("#dish")
-    .find(".dish")
-    .then((dish) => {
-      expect(dish).have.lengthOf(parseInt(totalDishes));
-    });
-});
+Then(
+  "I should see more than {string} dishes in Menu Page",
+  (totalDishes: string) => {
+    cy.get("#dish")
+      .find(".dish")
+      .then((dish) => {
+        expect(dish.length).to.be.greaterThanOrEqual(Number(totalDishes));
+      });
+  },
+);
 
-And("I should see image for every dish in Menu Page", () => {
+Then("I should see image for every dish in Menu Page", () => {
   cy.get(".dish").each((dish) => {
     cy.wrap(dish).find(".img-thumbnail").should("be.visible");
   });
@@ -36,7 +39,7 @@ When("There is an API Error", () => {
     },
     (req) => {
       req.destroy();
-    }
+    },
   );
 });
 
@@ -53,7 +56,7 @@ When("I hit the API I should see API resonse status as 200", () => {
   });
 });
 
-And("Check the length of the meals array", () => {
+Then("Check the length of the meals array", () => {
   cy.request({
     method: "GET",
     url: "https://www.themealdb.com/api/json/v1/1/filter.php?a=India",

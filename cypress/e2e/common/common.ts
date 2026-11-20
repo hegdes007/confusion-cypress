@@ -1,4 +1,4 @@
-import { When, Then, And } from "@badeball/cypress-cucumber-preprocessor";
+import { When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import { activeLink, link } from "../../support/pageObjects/commonObjects";
 
 When("I visit the Home Page", () => {
@@ -19,7 +19,7 @@ Then("I should see Navigation Bar and links associated with it", () => {
   cy.get("#Navbar").should("be.visible");
 });
 
-And("I should see {string} link should be active", (navLink: string) => {
+Then("I should see {string} link should be active", (navLink: string) => {
   activeLink(navLink);
   cy.get("#Navbar ul li").eq(link).should("have.class", "active");
 });

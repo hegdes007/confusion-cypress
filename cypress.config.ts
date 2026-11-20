@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+import { allureCypress } from "allure-cypress/reporter";
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const addCucumberPreprocessorPlugin =
   require("@badeball/cypress-cucumber-preprocessor").addCucumberPreprocessorPlugin;
@@ -18,8 +19,13 @@ const createEsbuildPlugin =
 // }
 
 module.exports = defineConfig({
+  downloadsFolder: "cypress/e2e/files/download",
+  experimentalWebKitSupport: true,
   e2e: {
     async setupNodeEvents(on, config) {
+      allureCypress(on, config, {
+        resultsDir: "allure-results",
+      });
       const bundler = createBundler({
         plugins: [createEsbuildPlugin(config)],
       });

@@ -36,6 +36,10 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+/allure-results
+/allure-report
+/allure-history
+/cypress/screenshots
 
 # System files
 .DS_Store

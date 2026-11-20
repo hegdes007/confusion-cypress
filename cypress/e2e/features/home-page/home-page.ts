@@ -1,12 +1,12 @@
 ///   <reference types="cypress" />
 
-import { And, Then, When } from "@badeball/cypress-cucumber-preprocessor";
+import { Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
 Then("I should see the moving Carousel Items", () => {
   cy.get("#mycarousel").should("be.visible");
 });
 
-And("There should be {string} Carousel Items", (length: string) => {
+Then("There should be {string} Carousel Items", (length: string) => {
   cy.get(".carousel-item").should("have.length", length);
 });
 
@@ -14,7 +14,7 @@ Then("I should see the Executive Chef Row on Home Page", () => {
   cy.get(".row").eq(8).should("be.visible");
 });
 
-And("Executive Chef name should be {string}", (name: string) => {
+Then("Executive Chef name should be {string}", (name: string) => {
   cy.get(".row")
     .eq(8)
     .within(() => {
@@ -26,14 +26,14 @@ Then(
   "I should see the list of the navigation links in the bottom of home page",
   () => {
     cy.get(".offset-1").should("be.visible");
-  }
+  },
 );
 
-And("Its heading should be {string}", (links: string) => {
+Then("Its heading should be {string}", (links: string) => {
   cy.get(".offset-1 h5").should("have.text", links);
 });
 
-And("I should see {string} links in the list", (number: string) => {
+Then("I should see {string} links in the list", (number: string) => {
   cy.get(".list-unstyled").children().should("have.length", number);
 });
 
@@ -41,7 +41,7 @@ Then("I should see the dish in home page", () => {
   cy.get(".row").eq(6).should("be.visible");
 });
 
-And("I should see a {string} label in Red color", (label: string) => {
+Then("I should see a {string} label in Red color", (label: string) => {
   cy.get(".row .badge-danger")
     .eq(2)
     .should("be.visible")
@@ -49,7 +49,7 @@ And("I should see a {string} label in Red color", (label: string) => {
     .should("have.css", "background-color", "rgb(220, 53, 69)");
 });
 
-And("I should see a {string} price tag in Grey color", (price: string) => {
+Then("I should see a {string} price tag in Grey color", (price: string) => {
   cy.get(".row .badge-secondary")
     .should("be.visible")
     .should("have.text", price)
@@ -70,7 +70,7 @@ Then("I type Username and Password", (dataTable: any) => {
   cy.get("#exampleInputPassword3").type(dataTable.rawTable[1][1]);
 });
 
-And("Clicking on Sign In closes the Modal", () => {
+Then("Clicking on Sign In closes the Modal", () => {
   cy.get(".btn-primary").eq(0).click();
   cy.get(".modal-dialog").should("not.be.visible");
 });
@@ -84,7 +84,7 @@ When(
   () => {
     cy.get("#reserveButton").click();
     cy.get(".modal-dialog").should("be.visible");
-  }
+  },
 );
 
 Then("I should click to choose the Number Of Guests", () => {
@@ -96,51 +96,12 @@ Then("I should click to choose the Number Of Guests", () => {
     });
 });
 
-And("I should type the Date and Time", (dataTable: any) => {
+Then("I should type the Date and Time", (dataTable: any) => {
   cy.get("#date.form-control").type(dataTable.rawTable[1][0]);
   cy.get("#time.form-control").type(dataTable.rawTable[1][1]);
 });
 
-And("Clicking on Reserve closes the Reserve Table Modal", () => {
+Then("Clicking on Reserve closes the Reserve Table Modal", () => {
   cy.get(".btn-primary").eq(1).click();
   cy.get(".modal-dialog").should("not.be.visible");
 });
-
-When("I vist the Alert Page", () => {
-  cy.visit("http://the-internet.herokuapp.com/javascript_alerts");
-});
-
-Then("Handling JS Alert - Validate Alert Text and Click OK", () => {
-  cy.contains("Click for JS Alert").click();
-  cy.on("window:alert", (str) => {
-    expect(str).to.equal("I am a JS Alert");
-  });
-  // cy.on("window:confirm", () => true); Alert is confirmed by default by Cypress
-  cy.get("#result").should("have.text", "You successfully clicked an alert");
-});
-
-Then("Handling JS Confirm - Validate Confirm Text and Click OK", () => {
-  cy.contains("Click for JS Confirm").click();
-  cy.on("window:confirm", (str) => {
-    expect(str).to.equal(`I am a JS Confirm`);
-  });
-  cy.on("window:confirm", () => true);
-  cy.get("#result").should("have.text", "You clicked: Ok");
-});
-
-Then("Handling JS Confirm - Click Cancel", () => {
-  cy.contains("Click for JS Confirm").click();
-  cy.on("window:confirm", () => false);
-  cy.get("#result").should("have.text", "You clicked: Cancel");
-});
-
-Then(
-  "Handling JS Prompt - Input text in prompt, Click OK and Validate Input Text",
-  () => {
-    cy.window().then(($win) => {
-      cy.stub($win, "prompt").returns("This is a test text");
-      cy.contains("Click for JS Prompt").click();
-    });
-    cy.get("#result").should("have.text", "You entered: This is a test text");
-  }
-);
