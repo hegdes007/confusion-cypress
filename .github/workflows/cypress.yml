@@ -54,6 +54,38 @@ jobs:
       - name: Run Cypress in Chrome, Firefox and WebKit
         run: npm run cy:run-all
 
+      - name: Fix misleading Allure skipped results
+        if: always()
+        run: |
+          node -e '
+          const fs = require("fs");
+          const path = require("path");
+
+          const dir = "allure-results";
+
+          if (!fs.existsSync(dir)) process.exit(0);
+
+          for (const file of fs.readdirSync(dir)) {
+            if (!file.endsWith("-result.json")) continue;
+
+            const p = path.join(dir, file);
+            const r = JSON.parse(fs.readFileSync(p, "utf8"));
+
+            if (
+              r.status === "skipped" &&
+              r.error?.message === "This is a pending test" &&
+              r.retries?.some(x => x.status === "passed")
+            ) {
+              r.status = "passed";
+              delete r.error;
+              delete r.statusDetails;
+
+              fs.writeFileSync(p, JSON.stringify(r, null, 2));
+              console.log("Fixed:", r.name);
+            }
+          }
+          '
+
       # Generate the combined Allure HTML report.
       - name: Generate Allure report
         if: always()
