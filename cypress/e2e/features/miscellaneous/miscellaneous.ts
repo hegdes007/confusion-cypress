@@ -2,40 +2,31 @@
 
 import { Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
-// const visitWindowSection = () => {
-//   cy.visit("https://playwrightlab.github.io/#frames", {
-//     onBeforeLoad(win) {
-//       // Intercept new tabs and popup windows
-//       cy.stub(win, "open").as("windowOpen");
-//     },
-//   });
-// };
-
 When("I vist the Alert Page", () => {
-  cy.visit("http://the-internet.herokuapp.com/javascript_alerts");
+  cy.visit("https://the-internet.herokuapp.com/javascript_alerts");
 });
 
 Then("Handling JS Alert - Validate Alert Text and Click OK", () => {
-  cy.contains("Click for JS Alert").click();
   cy.on("window:alert", (str) => {
     expect(str).to.equal("I am a JS Alert");
   });
+  cy.contains("Click for JS Alert").click();
   // cy.on("window:confirm", () => true); Alert is confirmed by default by Cypress
   cy.get("#result").should("have.text", "You successfully clicked an alert");
 });
 
 Then("Handling JS Confirm - Validate Confirm Text and Click OK", () => {
-  cy.contains("Click for JS Confirm").click();
   cy.on("window:confirm", (str) => {
     expect(str).to.equal(`I am a JS Confirm`);
+    return true;
   });
-  cy.on("window:confirm", () => true);
+  cy.contains("Click for JS Confirm").click();
   cy.get("#result").should("have.text", "You clicked: Ok");
 });
 
 Then("Handling JS Confirm - Click Cancel", () => {
-  cy.contains("Click for JS Confirm").click();
   cy.on("window:confirm", () => false);
+  cy.contains("Click for JS Confirm").click();
   cy.get("#result").should("have.text", "You clicked: Cancel");
 });
 
@@ -44,8 +35,8 @@ Then(
   () => {
     cy.window().then(($win) => {
       cy.stub($win, "prompt").returns("This is a test text");
-      cy.contains("Click for JS Prompt").click();
     });
+    cy.contains("Click for JS Prompt").click();
     cy.get("#result").should("have.text", "You entered: This is a test text");
   },
 );
@@ -94,7 +85,6 @@ Then("I should be able to download a file", () => {
 });
 
 When("I vist the Window Handling Page", () => {
-  // visitWindowSection();
   cy.visit("https://playwrightlab.github.io/#frames", {
     onBeforeLoad(win) {
       cy.stub(win, "open").as("windowOpen");
