@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "lib": ["es2021", "DOM"],
-    "types": ["node"],
-    "typeRoots": ["./node_modules/@types", "src/helper/types"],
-    "resolveJsonModule": true,
-    "strict": false
-  }
-}
