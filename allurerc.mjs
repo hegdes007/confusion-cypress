@@ -4,6 +4,7 @@ export default defineConfig({
   name: "Allure report for conFusion Cypress-Cucumber Project",
   historyPath: "./allure-history/history.jsonl",
   historyLimit: 10,
+  historyBaseUrl: "https://hegdes007.github.io/confusion-cypress/",
 
   environments: {
     chrome: {

@@ -1,0 +1,83 @@
+name: Cypress - All Browsers & Allure Report
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Prevent concurrent runs from overwriting report history.
+concurrency:
+  group: cypress-allure-report
+  cancel-in-progress: false
+
+jobs:
+  cypress:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install WebKit dependencies
+        run: npx playwright install --with-deps webkit
+
+      # Restore the previous Allure history from gh-pages.
+      - name: Restore Allure history
+        run: |
+          mkdir -p allure-history
+
+          git fetch origin gh-pages:refs/remotes/origin/gh-pages || true
+
+          if git show origin/gh-pages:allure-history/history.jsonl \
+            > allure-history/history.jsonl 2>/dev/null; then
+            echo "Previous Allure history restored."
+          else
+            echo "No previous history found. Starting fresh."
+            rm -f allure-history/history.jsonl
+          fi
+
+      # Run all three browsers.
+      # Continue even if one browser fails.
+      - name: Run Cypress in Chrome, Firefox and WebKit
+        run: npm run cy:run-all
+
+      # Generate the combined Allure HTML report.
+      - name: Generate Allure report
+        if: always()
+        run: |
+          npm run allure-report
+
+      # Prepare the GitHub Pages directory.
+      - name: Prepare report for deployment
+        if: always()
+        run: |
+          mkdir -p public
+
+          cp -r allure-report/. public/
+
+          mkdir -p public/allure-history
+          cp allure-history/history.jsonl \
+            public/allure-history/history.jsonl
+
+      # Publish report and history to gh-pages.
+      - name: Deploy report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./public
+          force_orphan: false
